@@ -32,7 +32,7 @@ def cosine(p1,p2):
     return dist;
 
 # kNN Function
-def kNN(X_train,y_train, X_test, k, dist='cosine',q=2):
+def kNN(X_train,y_train, X_test, k, dist='cosine',q=2): # distnya diganti ganti sesuai mau run pakai metode apa xD
     pred = []
     # Adjusting the data type
     if isinstance(X_test, np.ndarray):
