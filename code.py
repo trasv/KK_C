@@ -21,8 +21,14 @@ def manhattan(p1, p2):
 
 def cosine(p1,p2):
     dist = 0
+    a = 0
+    b = 0
+    c = 0
     for i in range(len(p1)):
-        dist = dist + (p1[i]*p2[i]) // (np.sqrt(np.square(p1[i])) * np.sqrt(np.square(p2[i])))
+        a = a + (p1[i]*p2[i])
+        b = b + np.square(p1[i])
+        c = c + np.square(p2[i])                        
+    dist = a / (np.sqrt(b) * np.sqrt(c))
     return dist;
 
 # kNN Function
@@ -60,6 +66,8 @@ def kNN(X_train,y_train, X_test, k, dist='cosine',q=2):
 
         # Sorting the all newdist
         newdist = newdist[:,idx]
+        if dist=='cosine':
+            newdist = np.flip(newdist,1)
         #print(newdist)
 
         # We should count neighbor labels and take the label which has max count
