@@ -4,6 +4,7 @@ import random
 from statistics import mean
 import warnings
 warnings.filterwarnings('ignore')
+import matplotlib.pyplot as plt
 
 # Distances
 def euclidian(p1, p2): 
@@ -149,13 +150,24 @@ yt = yt.drop(['class'],axis=1)
 
 #run
 acc = kfoldCV(yt, f=10, k=10, model="knn")
-print("Akurasi euclidian:", acc)
+print("Akurasi Cosine:", acc) # print nya juga diganti sesuai fungsi apa yang akan dipakai
 print("rata-rata akurasi:", round(mean(acc), 3))
 
-acc = kfoldCV(yt, f=10, k=10, model="knn")
-print("Akurasi Manhattan:", acc)
-print("rata-rata akurasi:", round(mean(acc), 3))
-
-acc = kfoldCV(yt, f=10, k=10, model="knn")
-print("Akurasi Cosine:", acc)
-print("rata-rata akurasi:", round(mean(acc), 3))
+#run langsung dari k 1-30 + grafik
+range_K = range(1, 31)
+score_K = []
+maks = 0
+for k in range_K:
+    acc=kfoldCV(yt, f=10, k=10, model="knn")
+    mean_acc = round(mean(acc), 5)
+    score_K.append(mean_acc)
+    print('akurasi K %d:' % k, mean_acc)
+    if(mean_acc > maks):
+        maks = mean_acc
+        nilai_k = k
+        
+print("Nilai optimal dari K :",nilai_k)
+plt.plot(range_K, score_K)
+plt.xlabel('Nilai K untuk Cosine') # nama fungsi juga diganti sesuai fungsi yang akan digunakan
+plt.ylabel('CV Akurasi')
+plt.show()
